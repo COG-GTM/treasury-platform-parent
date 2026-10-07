@@ -29,8 +29,13 @@ public class ApiErrorHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> invalidBody(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage).distinct().sorted().collect(Collectors.joining("; "));
+                .map(ApiErrorHandler::fieldMessage).distinct().sorted().collect(Collectors.joining("; "));
         return error(HttpStatus.BAD_REQUEST, message);
+    }
+
+    /** Binding failures (e.g. an unknown enum value) would otherwise expose internal type names. */
+    private static String fieldMessage(FieldError error) {
+        return error.isBindingFailure() ? "Invalid value for " + error.getField() : error.getDefaultMessage();
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

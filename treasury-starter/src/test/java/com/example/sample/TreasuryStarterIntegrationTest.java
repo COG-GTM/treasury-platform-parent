@@ -74,6 +74,15 @@ class TreasuryStarterIntegrationTest {
     }
 
     @Test
+    void invalidQueryParameterDoesNotLeakTypeNames() throws Exception {
+        mvc.perform(get("/api/search").param("direction", "BOGUS")
+                        .with(httpBasic("treasury-viewer", "viewer-local")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.message").value("Invalid value for direction"));
+    }
+
+    @Test
     void publicPathsAreOpen() throws Exception {
         mvc.perform(get("/docs/info")).andExpect(status().isOk());
     }
