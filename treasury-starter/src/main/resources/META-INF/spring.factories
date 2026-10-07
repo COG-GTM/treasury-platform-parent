@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.harborline.treasury.platform.TreasuryPlatformAutoConfiguration
