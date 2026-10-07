@@ -1,6 +1,7 @@
 package com.harborline.treasury.platform.security;
 
 import com.harborline.treasury.platform.TreasuryPlatformProperties;
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -53,6 +54,7 @@ public class TreasurySecurityConfiguration {
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(publicPaths).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/**").hasRole(VIEWER)
                         .requestMatchers("/api/**").hasRole(OPERATOR)
