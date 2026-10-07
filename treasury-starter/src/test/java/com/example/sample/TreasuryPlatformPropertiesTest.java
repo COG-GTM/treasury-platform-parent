@@ -6,6 +6,7 @@ import com.harborline.treasury.platform.web.CorrelationIdFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TreasuryPlatformPropertiesTest {
 
     private final WebApplicationContextRunner runner = new WebApplicationContextRunner()
-            .withConfiguration(AutoConfigurations.of(SecurityAutoConfiguration.class, TreasuryPlatformAutoConfiguration.class));
+            .withConfiguration(AutoConfigurations.of(WebMvcAutoConfiguration.class, SecurityAutoConfiguration.class,
+                    TreasuryPlatformAutoConfiguration.class));
 
     @Test
     void defaultsApply() {
