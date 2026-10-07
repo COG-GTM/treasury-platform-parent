@@ -31,7 +31,7 @@ public class TreasuryPlatformProperties {
         private final String viewerUser;
         private final String viewerPassword;
 
-        public Security(@DefaultValue({"/docs/**", "/v3/api-docs/**", "/swagger-ui/**", "/h2-console/**"}) List<String> publicPaths,
+        public Security(@DefaultValue({"/docs/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/h2-console/**"}) List<String> publicPaths,
                         @DefaultValue("treasury-operator") String operatorUser,
                         @DefaultValue("operator-local") String operatorPassword,
                         @DefaultValue("treasury-viewer") String viewerUser,

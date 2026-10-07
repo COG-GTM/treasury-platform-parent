@@ -77,4 +77,10 @@ class TreasuryStarterIntegrationTest {
     void publicPathsAreOpen() throws Exception {
         mvc.perform(get("/docs/info")).andExpect(status().isOk());
     }
+
+    @Test
+    void springdocEntryPointIsPublic() throws Exception {
+        // springdoc serves its UI entry at /swagger-ui.html; it must not be challenged for credentials.
+        mvc.perform(get("/swagger-ui.html")).andExpect(status().isNotFound());
+    }
 }
