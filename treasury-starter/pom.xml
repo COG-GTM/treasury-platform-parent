@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.harborline.treasury</groupId>
         <artifactId>treasury-platform-parent</artifactId>
-        <version>1.4.0</version>
+        <version>2.0.0</version>
     </parent>
 
     <artifactId>treasury-starter</artifactId>
