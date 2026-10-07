@@ -2,6 +2,7 @@ package com.harborline.treasury.platform.web;
 
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
 /**
@@ -49,11 +50,13 @@ public class ApiErrorHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ApiError> status(ResponseStatusException exception) {
-        return error(exception.getStatus(), exception.getReason());
+        return error(exception.getStatusCode(), exception.getReason());
     }
 
-    private ResponseEntity<ApiError> error(HttpStatus status, String message) {
-        ApiError body = new ApiError(status.value(), status.getReasonPhrase(), message, MDC.get(CorrelationIdFilter.MDC_KEY));
+    private ResponseEntity<ApiError> error(HttpStatusCode status, String message) {
+        HttpStatus resolved = HttpStatus.resolve(status.value());
+        String reason = resolved != null ? resolved.getReasonPhrase() : String.valueOf(status.value());
+        ApiError body = new ApiError(status.value(), reason, message, MDC.get(CorrelationIdFilter.MDC_KEY));
         return ResponseEntity.status(status).body(body);
     }
 }
