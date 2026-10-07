@@ -23,6 +23,13 @@ class TreasuryStarterErrorDispatchTest {
     }
 
     @Test
+    void springdocEntryPointsArePublic() {
+        assertThat(rest.getForEntity("/swagger-ui.html", String.class).getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(rest.getForEntity("/swagger-ui/index.html", String.class).getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(rest.getForEntity("/v3/api-docs", String.class).getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
     void missingApiResourceIsNotFoundForAuthenticatedCallers() {
         ResponseEntity<String> response = rest.withBasicAuth("treasury-viewer", "viewer-local")
                 .getForEntity("/api/missing", String.class);
