@@ -25,7 +25,7 @@ Shared build and runtime platform for the treasury services fleet:
 
 ## Versions
 
-- Spring Boot 2.7.18, Java 11, Maven 3.9 (wrapper included)
+- Spring Boot 3.5.16, Java 17, Maven 3.9 (wrapper included)
 
 ## Build
 

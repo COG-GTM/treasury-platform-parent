@@ -1,12 +1,10 @@
 package com.harborline.treasury.platform;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.List;
 
-@ConstructorBinding
 @ConfigurationProperties(prefix = "treasury.platform")
 public class TreasuryPlatformProperties {
 
@@ -33,7 +31,7 @@ public class TreasuryPlatformProperties {
         private final String viewerUser;
         private final String viewerPassword;
 
-        public Security(@DefaultValue({"/docs/**", "/v3/api-docs/**", "/swagger-ui/**", "/h2-console/**"}) List<String> publicPaths,
+        public Security(@DefaultValue({"/docs/**", "/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/h2-console/**"}) List<String> publicPaths,
                         @DefaultValue("treasury-operator") String operatorUser,
                         @DefaultValue("operator-local") String operatorPassword,
                         @DefaultValue("treasury-viewer") String viewerUser,

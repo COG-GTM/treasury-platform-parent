@@ -12,8 +12,22 @@ import java.util.Map;
 @SpringBootApplication
 public class SampleServiceApplication {
 
+    enum Direction { CREDIT, DEBIT }
+
+    static class SearchFilter {
+        private Direction direction;
+
+        public Direction getDirection() { return direction; }
+        public void setDirection(Direction direction) { this.direction = direction; }
+    }
+
     @RestController
     static class SampleController {
+        @GetMapping("/api/search")
+        Map<String, String> search(SearchFilter filter) {
+            return Collections.singletonMap("direction", String.valueOf(filter.getDirection()));
+        }
+
         @GetMapping("/api/ping")
         Map<String, String> ping() {
             return Collections.singletonMap("status", "ok");
