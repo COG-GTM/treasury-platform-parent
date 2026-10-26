@@ -1,12 +1,10 @@
 package com.harborline.treasury.platform;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.List;
 
-@ConstructorBinding
 @ConfigurationProperties(prefix = "treasury.platform")
 public class TreasuryPlatformProperties {
 

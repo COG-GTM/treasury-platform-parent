@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
 /**
@@ -49,7 +49,7 @@ public class ApiErrorHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ApiError> status(ResponseStatusException exception) {
-        return error(exception.getStatus(), exception.getReason());
+        return error(HttpStatus.valueOf(exception.getStatusCode().value()), exception.getReason());
     }
 
     private ResponseEntity<ApiError> error(HttpStatus status, String message) {
