@@ -1,8 +1,5 @@
 # treasury-platform-parent
 
-> **Synthetic demo code.** This repository is a fictional "Harborline Treasury" platform built to demonstrate
-> fleet-wide framework upgrades. It is not, and is not derived from, any bank's production code.
-
 Shared build and runtime platform for the treasury services fleet:
 
 | Repo | Role |
