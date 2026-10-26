@@ -18,6 +18,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
 /**
  * Baseline API security: read endpoints need TREASURY_VIEWER, anything that moves money
@@ -68,7 +69,9 @@ public class TreasurySecurityConfiguration {
     public SecurityFilterChain treasurySecurityFilterChain(
             HttpSecurity http, AuthenticationEntryPoint treasuryBasicAuthenticationEntryPoint) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
+                .headers(headers -> headers
+                        .frameOptions(frameOptions -> frameOptions.sameOrigin())
+                        .xssProtection(x -> x.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.ERROR, DispatcherType.FORWARD).permitAll()
