@@ -20,8 +20,22 @@ public class NotFoundErrorVaryHeaderFilter implements Filter {
         if (request.getDispatcherType() == DispatcherType.ERROR
                 && errorStatus instanceof Integer
                 && ((Integer) errorStatus) == HttpServletResponse.SC_NOT_FOUND) {
-            ((HttpServletResponse) response).setHeader("Vary", "Origin");
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
+            if (!variesByOrigin(httpResponse)) {
+                httpResponse.addHeader("Vary", "Origin");
+            }
         }
         chain.doFilter(request, response);
+    }
+
+    private boolean variesByOrigin(HttpServletResponse response) {
+        for (String varyHeader : response.getHeaders("Vary")) {
+            for (String value : varyHeader.split(",")) {
+                if ("Origin".equalsIgnoreCase(value.trim())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
